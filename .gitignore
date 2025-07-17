@@ -1,0 +1,43 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Log files
+logs/
+*.log
+
+# Cached data
+.cache/
+.pytest_cache/
+
+# Local configuration that might contain sensitive data
+.env
+local_settings.py
+
+# Streamlit specific
+.streamlit/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Any test data or temporary files
+data/temp/
+tmp/
