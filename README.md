@@ -2,8 +2,6 @@
 
 A comprehensive, object-oriented system monitoring application for Raspberry Pi devices that provides real-time metrics and visualizations through a web-based dashboard.
 
-![Python Tests](https://github.com/yourusername/raspberry-pi-system-monitor/actions/workflows/python-tests.yml/badge.svg)
-
 ## Features
 
 - **Real-time System Monitoring**:
@@ -136,6 +134,11 @@ class NetworkMonitor(SystemComponent):
         # Format the network statistics for display
         pass
 ```
+
+## Continuous Integration
+
+This project uses [GitHub Actions](https://github.com/features/actions) for automated testing and code linting.  
+All pushes and pull requests to the `main` branch are automatically checked for code quality and correctness.
 
 ## Contributing
 

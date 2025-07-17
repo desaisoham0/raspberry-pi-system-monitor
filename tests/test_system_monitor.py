@@ -10,22 +10,26 @@ from system_component import SystemComponent
 class MockComponent(SystemComponent):
     """Mock implementation of SystemComponent for testing."""
     
-    def __init__(self, usage_value, formatted_value):
+    def __init__(self, usage_value, formatted_value, speed_value=None):
         self.usage_value = usage_value
         self.formatted_value = formatted_value
+        self.speed_value = speed_value
     
     def get_usage(self):
         return self.usage_value
     
     def get_formatted_usage(self):
         return self.formatted_value
+        
+    def get_speed(self):
+        return self.speed_value if self.speed_value is not None else "1500.00 MHz"
 
 class TestSystemMonitor(unittest.TestCase):
     
     def setUp(self):
         """Set up test fixtures."""
         # Create mock components
-        self.mock_cpu = MockComponent(50, "CPU Usage: 50%")
+        self.mock_cpu = MockComponent(50, "CPU Usage: 50%", "1500.00 MHz")
         self.mock_ram = MockComponent(
             {"total": 8, "used": 4, "percent": 50},
             {"total": "8.00 GB", "used": "4.00 GB", "percent": "50%"}
@@ -59,9 +63,6 @@ class TestSystemMonitor(unittest.TestCase):
         
         # Create SystemMonitor with mock components
         self.system_monitor = SystemMonitor(self.components)
-        
-        # Mock the get_speed method on CPU
-        self.system_monitor.cpu_info.get_speed = MagicMock(return_value="1500.00 MHz")
     
     def test_get_all_usage(self):
         """Test that get_all_usage returns the correct data."""
@@ -81,8 +82,8 @@ class TestSystemMonitor(unittest.TestCase):
     
     def test_update_component(self):
         """Test that update_component correctly updates a component."""
-        # Create a new mock component
-        new_cpu = MockComponent(75, "CPU Usage: 75%")
+        # Create a new mock component with speed value
+        new_cpu = MockComponent(75, "CPU Usage: 75%", "1800.00 MHz")
         
         # Update the CPU component
         result = self.system_monitor.update_component('cpu', new_cpu)
@@ -93,6 +94,7 @@ class TestSystemMonitor(unittest.TestCase):
         # Check that the component was updated
         usage = self.system_monitor.get_all_usage()
         self.assertEqual(usage['cpu'], "CPU Usage: 75%")
+        self.assertEqual(usage['cpu_speed'], "1800.00 MHz")
         
         # Test updating an unknown component
         result = self.system_monitor.update_component('unknown', new_cpu)
